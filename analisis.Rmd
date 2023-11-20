@@ -124,7 +124,15 @@ todos_los_datos_filtrados <- todos_los_datos %>%
 todos_los_datos_max <- todos_los_datos_filtrados %>% 
   group_by(Station) %>% 
   summarise(`Max (mm)` = max(`Precip. Accum.`, na.rm = T) * 25.4)
-todos_los_datos_max %>% knitr::kable(caption = paste0('Valor máximo acumulado, estaciones con datos de Weather Underground, Santo Domingo', ' (', fecha, ')'))
+todos_los_datos_max %>%
+  arrange(desc(`Max (mm)`)) %>%
+  knitr::kable(
+    caption = paste0(
+      'Valor máximo acumulado, estaciones con datos de Weather Underground, Santo Domingo',
+      ' (', fecha, ')'))
+# todos_los_datos_max %>%
+#   arrange(desc(`Max (mm)`)) %>%
+#   write_csv(paste0(dir_datos, '/', 'todos/todos_los_datos_max.csv'))
 ```
 
 ```{r, message=F, warning=F}

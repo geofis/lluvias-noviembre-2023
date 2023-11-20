@@ -127,25 +127,36 @@ todos_los_datos_filtrados <- todos_los_datos %>%
 todos_los_datos_max <- todos_los_datos_filtrados %>% 
   group_by(Station) %>% 
   summarise(`Max (mm)` = max(`Precip. Accum.`, na.rm = T) * 25.4)
-todos_los_datos_max %>% knitr::kable(caption = paste0('Valor máximo acumulado, estaciones con datos de Weather Underground, Santo Domingo', ' (', fecha, ')'))
+todos_los_datos_max %>%
+  arrange(desc(`Max (mm)`)) %>%
+  knitr::kable(
+    caption = paste0(
+      'Valor máximo acumulado, estaciones con datos de Weather Underground, Santo Domingo',
+      ' (', fecha, ')'))
 ```
 
 | Station   | Max (mm) |
 |:----------|---------:|
-| IPEDRO2   |  218.440 |
-| ISANTO121 |  248.158 |
-| ISANTO159 |  410.210 |
-| ISANTO17  |  255.524 |
-| ISANTO226 |  320.294 |
-| ISANTO229 |  294.640 |
-| ISANTO283 |  353.060 |
-| ISANTO293 |  299.720 |
-| ISANTO294 |  227.584 |
-| ISANTO34  |  434.848 |
 | ISANTO80  |  450.850 |
+| ISANTO34  |  434.848 |
+| ISANTO159 |  410.210 |
+| ISANTO283 |  353.060 |
+| ISANTO226 |  320.294 |
+| ISANTO293 |  299.720 |
+| ISANTO229 |  294.640 |
+| ISANTO17  |  255.524 |
+| ISANTO121 |  248.158 |
+| ISANTO294 |  227.584 |
+| IPEDRO2   |  218.440 |
 
 <span id="tab:unnamed-chunk-6"></span>Table 1: Valor máximo acumulado,
 estaciones con datos de Weather Underground, Santo Domingo (2023-11-18)
+
+``` r
+# todos_los_datos_max %>%
+#   arrange(desc(`Max (mm)`)) %>%
+#   write_csv(paste0(dir_datos, '/', 'todos/todos_los_datos_max.csv'))
+```
 
 ``` r
 p <- graficar_panel(tabla_sel = todos_los_datos_filtrados, facet_var = 'Station', intervalo_mins = 360) +
